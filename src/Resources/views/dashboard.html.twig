@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        pre::-webkit-scrollbar {
+            width: 15px;
+            height: 15px;
+        }
+
+        pre::-webkit-scrollbar-track {
+            border-radius: 100vh;
+            background: #f3f3f3;
+        }
+
+        pre::-webkit-scrollbar-thumb {
+            background: #c7c7c7;
+            border-radius: 100vh;
+        }
+
+        pre::-webkit-scrollbar-thumb:hover {
+            background: #555555;
+        }
+    </style>
+    <title>whatwedoMonitorBundle</title>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-full">
+        <nav class="bg-indigo-600">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="flex h-16 items-center justify-between">
+                    <h1 class="text-white font-bold text-xl">
+                        whatwedoMonitorBundle
+                    </h1>
+
+                    <div class="hidden sm:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            {% for name, rows in result %}
+                                <a href="#{{ name }}" class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium">{{ name|title }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sm:hidden" id="mobile-menu">
+                <div class="space-y-1 px-2 pt-2 pb-3 sm:px-3">
+                    {% for name, rows in result %}
+                        <a href="#{{ name }}" class="text-white hover:bg-indigo-500 hover:bg-opacity-75 block px-3 py-2 rounded-md text-base font-medium">{{ name|title }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </nav>
+
+        <main class="px-4">
+            {% for name, rows in result %}
+                {{ _self.print_result(name, rows) }}
+            {% endfor %}
+        </main>
+    </div>
+</body>
+</html>
+
+{% macro print_result(name, rows) %}
+    {% if rows|length > 0 and rows|first.state is defined %}
+        <div class="overflow-hidden bg-white shadow sm:rounded-lg">
+            <div class="px-4 py-5 sm:px-6">
+                <h3 class="text-lg font-medium leading-6 text-gray-900">{{ name|title }}</h3>
+            </div>
+            <div class="border-t border-gray-200">
+                <dl>
+                    {% for row in rows %}
+                        <div class="bg-{% if loop.index is divisible by(2) %}white{% else %}gray-50{% endif %} px-4 py-5 sm:gap-4 sm:px-6 flex flex-row">
+                            <dt class="text-sm font-medium flex-1 text-gray-500">{{ row.name }}</dt>
+                            {% if row.value is defined and row.value is not null %}
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0"><code>{{ row.value }}</code></dd>
+                            {% endif %}
+                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0">
+                                <span class="inline-block items-center rounded-full bg-{{ row.state.cliColor }}-100 px-3 py-0.5 text-sm font-medium text-{{ row.state.cliColor }}-800 w-10 text-center" title="{{ row.state.value }}">{{ row.state.icon }}</span>
+                            </dd>
+                        </div>
+                        {% if row.details is defined and row.details is not empty %}
+                        <div class="bg-{% if loop.index is divisible by(2) %}white{% else %}gray-50{% endif %} px-4 pb-5 sm:gap-4 sm:px-6 flex flex-row">
+                            <pre class="max-h-20 w-full overflow-y-scroll text-xs">{{ row.details|json_encode(constant('JSON_PRETTY_PRINT') b-or constant('JSON_HEX_QUOT')) }}</pre>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </dl>
+            </div>
+        </div>
+    {% elseif rows|length > 0 and rows|first.state is not defined %}
+        <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+            <div class="md:flex md:items-center md:justify-between mb-4">
+                <div class="min-w-0 flex-1">
+                    <h2 id="{{ name }}" class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">{{ name|title }}</h2>
+                </div>
+            </div>
+
+            {% for name, row in rows %}
+                {{ _self.print_result(name, row) }}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endmacro %}

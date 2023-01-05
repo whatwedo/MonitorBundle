@@ -1,0 +1,9 @@
+whatwedo_monitor_api:
+    controller: whatwedo\MonitorBundle\Controller\ApiController
+    path: /api.{_format}
+    requirements:
+        _format: json|xml
+
+whatwedo_monitor_dashboard:
+    controller: whatwedo\MonitorBundle\Controller\DashboardController
+    path: /dashboard

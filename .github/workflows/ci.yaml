@@ -1,0 +1,70 @@
+name: whatwedoMonitorBundle
+
+on:
+    push: ~
+    pull_request: ~
+
+jobs:
+    phpunit:
+        runs-on: ${{ matrix.operating-system }}
+        name: PHP ${{ matrix.php }} and Symfony ${{ matrix.symfony }} on ${{ matrix.operating-system }}
+        strategy:
+            matrix:
+                operating-system: [ ubuntu-latest ]
+                php: [ '8.1', '8.2' ]
+                symfony: ['5.3.*', '5.4.*', '6.0.*', '6.1.*']
+
+        steps:
+            - uses: actions/checkout@master
+
+            - name: Setup PHP ${{ matrix.php }}
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  tools: flex
+
+            - name: Download dependencies
+              env:
+                  SYMFONY_REQUIRE: ${{ matrix.symfony }}
+              uses: ramsey/composer-install@v1
+
+            - name: Run test suite on PHP ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
+              uses: php-actions/phpunit@v3
+              env:
+                XDEBUG_MODE: coverage
+                ACTION_PHPUNIT_PATH: ./vendor/bin/phpunit
+              with:
+                configuration: phpunit.xml.dist
+                php_extensions: xdebug
+                args: tests --coverage-clover ./coverage.xml
+
+            - name: Upload to Codecov
+              uses: codecov/codecov-action@v2
+              with:
+                files: ./coverage.xml
+                verbose: true
+
+    qa:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@master
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.2'
+
+            - name: Download dependencies
+              env:
+                  SYMFONY_REQUIRE: ${{ matrix.symfony }}
+              uses: ramsey/composer-install@v1
+
+            - name: Initialize simple-phpunit
+              run: vendor/bin/simple-phpunit --version
+
+            - name: Check Code Styles
+              run: vendor/bin/ecs
+
+            - name: Check PHPStan
+              run: vendor/bin/phpstan analyse src tests

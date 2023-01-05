@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<response><sensor><dummy><name>Critical Test</name><state>critical</state><details/></dummy><dummy><name>Successful Test</name><state>successful</state><details/></dummy><dummy><name>Warning Test</name><state>warning</state><details/></dummy></sensor><metric><dummy><name>Critical Test</name><state>critical</state><value>24</value></dummy><dummy><name>Ok Test</name><state>ok</state><value>80</value></dummy><dummy><name>Warning Test</name><state>warning</state><value>125</value></dummy></metric></response>

@@ -1,0 +1,6 @@
+services:
+    whatwedo\MonitorBundle\Tests\Monitoring\Sensor\Dummy\SuccessfulDummySensor:
+        tags: [ 'whatwedo_monitor.attribute' ]
+
+    whatwedo\MonitorBundle\Tests\Monitoring\Metric\Dummy\OkDummyMetric:
+        tags: [ 'whatwedo_monitor.attribute' ]

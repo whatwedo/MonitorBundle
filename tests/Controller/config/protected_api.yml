@@ -1,0 +1,4 @@
+whatwedo_monitor:
+    endpoint:
+        api:
+            auth_token: 'secret'

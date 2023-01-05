@@ -1,0 +1,11 @@
+doctrine_migrations:
+    migrations_paths:
+        'whatwedo\MonitorBundle\Tests\Monitoring\Sensor\Database\Migrations': '%kernel.project_dir%/tests/Monitoring/Sensor/Database/Migrations'
+    transactional: false
+    storage:
+        table_storage:
+            table_name: 'migration_versions'
+
+services:
+    Doctrine\Migrations\Version\MigrationStatusCalculator:
+        factory: ['@doctrine.migrations.dependency_factory', 'getMigrationStatusCalculator']

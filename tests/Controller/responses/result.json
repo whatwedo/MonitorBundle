@@ -1,0 +1,1 @@
+{"sensor":{"dummy":[{"name":"Critical Test","state":"critical","details":[]},{"name":"Successful Test","state":"successful","details":[]},{"name":"Warning Test","state":"warning","details":[]}]},"metric":{"dummy":[{"name":"Critical Test","state":"critical","value":24},{"name":"Ok Test","state":"ok","value":80},{"name":"Warning Test","state":"warning","value":125}]}}

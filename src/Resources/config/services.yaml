@@ -1,0 +1,19 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    whatwedo\MonitorBundle\:
+        resource: '../../*'
+        exclude:
+            - '../../DependencyInjection/'
+            - '../../Enum/'
+
+    whatwedo\MonitorBundle\Controller\:
+        resource: '../../Controller/'
+        tags: ['controller.service_arguments']
+
+    whatwedo\MonitorBundle\Normalizer\:
+        resource: '../../Normalizer/'
+        tags: ['serializer.normalizer']
