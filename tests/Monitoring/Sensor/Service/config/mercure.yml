@@ -3,4 +3,4 @@ mercure:
         default:
             url: http://127.0.0.1/.well-known/mercure
             jwt:
-              secret: 'secret'
+              secret: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'

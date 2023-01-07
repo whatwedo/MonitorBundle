@@ -21,8 +21,8 @@ class CheckCommandTest extends KernelTestCase
                 $kernel->addTestConfig(__DIR__ . '/../config/dummy_successful.yml');
             },
         ]);
-        $application = new Application($kernel);
 
+        $application = new Application($kernel);
         $command = $application->find('whatwedo:monitor:check');
 
         $commandTester = new CommandTester($command);

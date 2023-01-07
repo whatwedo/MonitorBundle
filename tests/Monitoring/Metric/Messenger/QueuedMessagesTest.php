@@ -41,6 +41,11 @@ class QueuedMessagesTest extends AbstractMonitoringTest
         self::assertEquals(MetricStateEnum::CRITICAL, $attribute->getState());
     }
 
+    public function testName(): void
+    {
+        self::assertStringContainsString('Queued Messages', $this->createMockAttribute(0)->getName());
+    }
+
     protected function createMockAttribute(int $messageCount): QueuedMessages
     {
         $serviceLocator = $this->createMock(ServiceLocator::class);
