@@ -43,11 +43,7 @@ class DoctrineDbal extends AbstractSensor implements ServiceSubscriberInterface
                     $connection->getDriver()->getDatabasePlatform()->getDummySelectSQL()
                 );
             } catch (Exception $e) {
-                $this->details[] = [
-                    'name' => $name,
-                    'state' => SensorStateEnum::CRITICAL,
-                    'message' => $e->getMessage(),
-                ];
+                $this->details['exception'] = $e->getMessage();
                 $this->state = SensorStateEnum::CRITICAL;
             }
         }

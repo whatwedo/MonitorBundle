@@ -17,3 +17,11 @@ services:
     whatwedo\MonitorBundle\Normalizer\:
         resource: '../../Normalizer/'
         tags: ['serializer.normalizer']
+
+    whatwedo\MonitorBundle\Monitoring\Metric\Messenger\QueuedMessages:
+        arguments:
+            $receiverLocator: '@?messenger.receiver_locator'
+            $failureTransport: '@?messenger.failure_transports.default'
+
+    whatwedo\MonitorBundle\Monitoring\Sensor\Database\DoctrineMigrations:
+        arguments: ['@?doctrine.migrations.dependency_factory']

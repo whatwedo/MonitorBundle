@@ -39,6 +39,15 @@ whatwedo_monitor_api:
         _format: json|xml
 ```
 
+## Configure predefined attributes
+There are predefined attributes. For example there is an attribute which checks the database connection if Doctrine DBAL is installed.
+
+Check the configuration reference to configure predefined attributes.
+
+```
+bin/console config:dump-reference whatwedo_monitor
+```
+
 ## Getting started
 
 - [Checking states (Dashboard, Command line, API)](checking-states.md)

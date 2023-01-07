@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace whatwedo\MonitorBundle\Tests\Monitoring;
 
 use Nyholm\BundleTest\TestKernel;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Console\Tester\CommandTester;
 use whatwedo\MonitorBundle\Manager\MonitoringManager;
 use whatwedo\MonitorBundle\Monitoring\AttributeInterface;
 use whatwedo\MonitorBundle\Tests\UseTestKernelTrait;
@@ -14,9 +16,13 @@ abstract class AbstractMonitoringTest extends KernelTestCase
 {
     use UseTestKernelTrait;
 
-    abstract public static function configureSuccessfulKernel(TestKernel $kernel): void;
+    public static function configureSuccessfulKernel(TestKernel $kernel): void
+    {
+    }
 
-    abstract public static function configureFailureKernel(TestKernel $kernel): void;
+    public static function configureFailureKernel(TestKernel $kernel): void
+    {
+    }
 
     public function testDisabled(): void
     {
@@ -32,9 +38,25 @@ abstract class AbstractMonitoringTest extends KernelTestCase
 
     public function testSuccessful(): void
     {
-        self::assertTrue(self::bootKernel([
+        $kernel = self::bootKernel([
             'config' => [$this, 'configureSuccessfulKernel'],
-        ])->getContainer()->get(MonitoringManager::class)->isSuccessful());
+        ]);
+        self::assertTrue($kernel->getContainer()->get(MonitoringManager::class)->isSuccessful());
+    }
+
+    public function testName(): void
+    {
+        $kernel = self::bootKernel([
+            'config' => [$this, 'configureSuccessfulKernel'],
+        ]);
+
+        $application = new Application($kernel);
+        $command = $application->find('whatwedo:monitor:check');
+
+        $commandTester = new CommandTester($command);
+        $commandTester->execute([]);
+
+        self::assertStringContainsString($this->getAttribute($kernel)->getName(), $commandTester->getDisplay());
     }
 
     public function testFailure(): void

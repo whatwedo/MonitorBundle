@@ -14,6 +14,7 @@ use whatwedo\MonitorBundle\Command\CheckCommand;
 use whatwedo\MonitorBundle\Controller\ApiController;
 use whatwedo\MonitorBundle\Controller\DashboardController;
 use whatwedo\MonitorBundle\Monitoring\AttributeInterface;
+use whatwedo\MonitorBundle\Monitoring\Metric\Messenger\QueuedMessages;
 
 /**
  * This is the class that loads and manages your bundle configuration.
@@ -30,6 +31,16 @@ class whatwedoMonitorExtension extends Extension implements PrependExtensionInte
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
 
+        // tag monitoring attributes (sensors and metrics)
+        $container->registerForAutoconfiguration(AttributeInterface::class)
+            ->addTag('whatwedo_monitor.attribute');
+
+        $this->configureEndpoints($container, $config);
+        $this->configureMonitoring($container, $config);
+    }
+
+    public function configureEndpoints(ContainerBuilder $container, array $config)
+    {
         // register API
         $container->findDefinition(ApiController::class)
             ->addArgument($config['endpoint']['api']['auth_token'] ?? null);
@@ -50,10 +61,13 @@ class whatwedoMonitorExtension extends Extension implements PrependExtensionInte
             && ! $config['endpoint']['command']['enabled']) {
             $container->removeDefinition(CheckCommand::class);
         }
+    }
 
-        // tag monitoring attributes (sensors and metrics)
-        $container->registerForAutoconfiguration(AttributeInterface::class)
-            ->addTag('whatwedo_monitor.attribute');
+    public function configureMonitoring(ContainerBuilder $container, array $config)
+    {
+        $container->findDefinition(QueuedMessages::class)
+            ->setArgument(0, $config['monitoring']['metric']['messenger']['queued_messages']['warning_threshold'] ?? 5)
+            ->setArgument(1, $config['monitoring']['metric']['messenger']['queued_messages']['critical_threshold'] ?? 10);
     }
 
     public function prepend(ContainerBuilder $container)
