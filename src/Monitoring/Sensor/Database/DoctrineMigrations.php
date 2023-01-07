@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace whatwedo\MonitorBundle\Monitoring\Sensor\Database;
 
+use Doctrine\Migrations\DependencyFactory;
 use Doctrine\Migrations\Version\MigrationStatusCalculator;
-use Psr\Container\ContainerInterface;
-use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use whatwedo\MonitorBundle\Enum\SensorStateEnum;
 use whatwedo\MonitorBundle\Monitoring\Sensor\AbstractSensor;
 
-class DoctrineMigrations extends AbstractSensor implements ServiceSubscriberInterface
+class DoctrineMigrations extends AbstractSensor
 {
     public function __construct(
-        protected ContainerInterface $container
+        protected ?DependencyFactory $dependencyFactory = null
     ) {
     }
 
@@ -24,7 +23,7 @@ class DoctrineMigrations extends AbstractSensor implements ServiceSubscriberInte
 
     public function isEnabled(): bool
     {
-        return $this->container->has(MigrationStatusCalculator::class);
+        return $this->dependencyFactory instanceof DependencyFactory;
     }
 
     public function run(): void
@@ -32,7 +31,7 @@ class DoctrineMigrations extends AbstractSensor implements ServiceSubscriberInte
         $this->state = SensorStateEnum::SUCCESSFUL;
 
         /** @var MigrationStatusCalculator $migrationStatus */
-        $migrationStatus = $this->container->get(MigrationStatusCalculator::class);
+        $migrationStatus = $this->dependencyFactory->getMigrationStatusCalculator();
 
         $value = count($migrationStatus->getExecutedUnavailableMigrations());
         if ($value > 0) {
@@ -45,12 +44,5 @@ class DoctrineMigrations extends AbstractSensor implements ServiceSubscriberInte
             $this->details['new_migrations'] = $value;
             $this->state = SensorStateEnum::CRITICAL;
         }
-    }
-
-    public static function getSubscribedServices(): array
-    {
-        return [
-            '?' . MigrationStatusCalculator::class,
-        ];
     }
 }

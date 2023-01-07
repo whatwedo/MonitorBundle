@@ -17,3 +17,6 @@ services:
     whatwedo\MonitorBundle\Normalizer\:
         resource: '../../Normalizer/'
         tags: ['serializer.normalizer']
+
+    whatwedo\MonitorBundle\Monitoring\Sensor\Database\DoctrineMigrations:
+        arguments: ['@?doctrine.migrations.dependency_factory']
