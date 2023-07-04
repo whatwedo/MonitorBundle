@@ -75,6 +75,10 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->integerNode('warning_exit_code')
+                    ->defaultValue(1)
+                    ->info('Exit code for warning state (default 1)')
+                ->end()
             ->end()
         ;
 

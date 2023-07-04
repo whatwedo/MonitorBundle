@@ -52,7 +52,7 @@ class DoctrineDbal extends AbstractSensor implements ServiceSubscriberInterface
     public static function getSubscribedServices(): array
     {
         return [
-            '?' . ManagerRegistry::class,
+            '?'.ManagerRegistry::class,
         ];
     }
 }

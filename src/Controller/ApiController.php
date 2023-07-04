@@ -20,8 +20,8 @@ class ApiController extends AbstractController
 
     public function __invoke(Request $request, MonitoringManager $monitoringManager, SerializerInterface $serializer): Response
     {
-        if ($this->authToken !== null &&
-            $request->headers->get('X-Auth-Token', '') !== $this->authToken) {
+        if ($this->authToken !== null
+            && $request->headers->get('X-Auth-Token', '') !== $this->authToken) {
             return new Response('Unauthorized', 401);
         }
 

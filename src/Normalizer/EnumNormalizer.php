@@ -4,15 +4,11 @@ declare(strict_types=1);
 
 namespace whatwedo\MonitorBundle\Normalizer;
 
-use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use whatwedo\MonitorBundle\Enum\MetricStateEnum;
 use whatwedo\MonitorBundle\Enum\SensorStateEnum;
 
-/**
- * symfony 5.3 compatibility (https://github.com/symfony/symfony/pull/40830 has been merged into 5.4)
- */
-class EnumNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface
+class EnumNormalizer implements NormalizerInterface
 {
     /**
      * @param MetricStateEnum|SensorStateEnum $object
@@ -24,12 +20,14 @@ class EnumNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
 
     public function supportsNormalization($data, string $format = null, array $context = []): bool
     {
-        return ! class_exists('Symfony\Component\Serializer\Normalizer\BackedEnumNormalizer')
-            && ($data instanceof MetricStateEnum || $data instanceof SensorStateEnum);
+        return $data instanceof MetricStateEnum || $data instanceof SensorStateEnum;
     }
 
-    public function hasCacheableSupportsMethod(): bool
+    public function getSupportedTypes(?string $format): array
     {
-        return true;
+        return [
+            MetricStateEnum::class => true,
+            SensorStateEnum::class => true,
+        ];
     }
 }

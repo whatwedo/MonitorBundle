@@ -20,6 +20,7 @@ use whatwedo\MonitorBundle\Monitoring\Sensor\AbstractSensor;
 class CheckCommand extends Command
 {
     public function __construct(
+        protected int $warningExitCode,
         protected MonitoringManager $monitoringManager
     ) {
         parent::__construct();
@@ -30,7 +31,12 @@ class CheckCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $this->printResult($io, $this->monitoringManager->getResult());
 
-        return $this->monitoringManager->isSuccessful() ? static::SUCCESS : static::FAILURE;
+        if ($this->monitoringManager->isSuccessful() && $this->monitoringManager->isWarning()) {
+            return $this->warningExitCode;
+        } elseif ($this->monitoringManager->isSuccessful()) {
+            return self::SUCCESS;
+        }
+        return self::FAILURE;
     }
 
     private function printResult(SymfonyStyle $io, $result, $previousGroup = null, $level = 0): void

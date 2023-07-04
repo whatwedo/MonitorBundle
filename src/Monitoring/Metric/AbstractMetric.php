@@ -16,7 +16,7 @@ abstract class AbstractMetric implements AttributeInterface
     public function getState(): MetricStateEnum
     {
         if ($this->state === null) {
-            throw new \RuntimeException(__CLASS__ . '::$state is not set.');
+            throw new \RuntimeException(__CLASS__.'::$state is not set.');
         }
 
         return $this->state;

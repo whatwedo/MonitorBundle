@@ -16,7 +16,7 @@ abstract class AbstractSensor implements AttributeInterface
     public function getState(): SensorStateEnum
     {
         if ($this->state === null) {
-            throw new \RuntimeException(__CLASS__ . '::$state is not set.');
+            throw new \RuntimeException(__CLASS__.'::$state is not set.');
         }
 
         return $this->state;
