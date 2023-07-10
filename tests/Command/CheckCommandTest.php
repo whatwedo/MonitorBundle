@@ -77,6 +77,21 @@ class CheckCommandTest extends KernelTestCase
         self::assertEquals(1, $commandTester->getStatusCode());
     }
 
+    public function testCriticalCustomExitCode(): void
+    {
+        $kernel = self::bootKernel([
+            'config' => static function (TestKernel $kernel) {
+                $kernel->addTestConfig(__DIR__.'/../config/dummy_critical_custom_exit_code.yml');
+            },
+        ]);
+        $application = new Application($kernel);
+        $command = $application->find('whatwedo:monitor:check');
+
+        $commandTester = new CommandTester($command);
+        $commandTester->execute([]);
+        self::assertEquals(-1, $commandTester->getStatusCode());
+    }
+
     public function testRuntimeError(): void
     {
         $kernel = self::bootKernel([

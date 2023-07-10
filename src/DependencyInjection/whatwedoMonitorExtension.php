@@ -42,7 +42,10 @@ class whatwedoMonitorExtension extends Extension implements PrependExtensionInte
     {
         // register API
         $container->findDefinition(ApiController::class)
-            ->addArgument($config['endpoint']['api']['auth_token'] ?? null);
+            ->addArgument($config['endpoint']['api']['exit_code']['warning'] ?? 503)
+            ->addArgument($config['endpoint']['api']['exit_code']['critical'] ?? 503)
+            ->addArgument($config['endpoint']['api']['auth_token'] ?? null)
+        ;
 
         if (isset($config['endpoint']['api']['enabled'])
             && ! $config['endpoint']['api']['enabled']) {
@@ -70,7 +73,8 @@ class whatwedoMonitorExtension extends Extension implements PrependExtensionInte
         if (!(isset($config['endpoint']['command']['enabled'])
             && ! $config['endpoint']['command']['enabled'])) {
             $container->findDefinition(CheckCommand::class)
-                ->setArgument(0, $config['warning_exit_code'] ?? 1)
+                ->setArgument(0, $config['endpoint']['command']['exit_code']['warning'] ?? 1)
+                ->setArgument(1, $config['endpoint']['command']['exit_code']['critical'] ?? 1)
             ;
         }
     }

@@ -6,4 +6,7 @@ services:
     tags: [ 'whatwedo_monitor.attribute' ]
 
 whatwedo_monitor:
-  warning_exit_code: 2
+  endpoint:
+    command:
+      exit_code:
+        warning: 2
