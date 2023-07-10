@@ -7,7 +7,7 @@ namespace whatwedo\MonitorBundle\Monitoring\Metric\Messenger;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 use Symfony\Component\Messenger\Transport\Receiver\MessageCountAwareInterface;
 use Symfony\Component\Messenger\Transport\TransportInterface;
-use whatwedo\MonitorBundle\Enum\MetricStateEnum;
+use whatwedo\MonitorBundle\Enums\MetricStateEnum;
 use whatwedo\MonitorBundle\Monitoring\Metric\AbstractMetric;
 
 class QueuedMessages extends AbstractMetric

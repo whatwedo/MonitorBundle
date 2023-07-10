@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace whatwedo\MonitorBundle\Monitoring\Metric;
 
-use whatwedo\MonitorBundle\Enum\MetricStateEnum;
+use whatwedo\MonitorBundle\Enums\MetricStateEnum;
 use whatwedo\MonitorBundle\Monitoring\AttributeInterface;
 
 abstract class AbstractMetric implements AttributeInterface

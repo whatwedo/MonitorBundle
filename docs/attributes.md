@@ -34,7 +34,7 @@ declare(strict_types=1);
 namespace App\Monitoring\Sensor\ThirdParty;
 
 use App\Api\ServerApi;
-use whatwedo\MonitorBundle\Enum\SensorStateEnum;
+use whatwedo\MonitorBundle\Enums\SensorStateEnum;
 use whatwedo\MonitorBundle\Monitoring\Sensor\AbstractSensor;
 
 class MyApi extends AbstractSensor
@@ -82,7 +82,7 @@ declare(strict_types=1);
 namespace App\Monitoring\Sensor\Service;
 
 use App\Repository\EmailRepository;
-use whatwedo\MonitorBundle\Enum\SensorStateEnum;
+use whatwedo\MonitorBundle\Enums\SensorStateEnum;
 use whatwedo\MonitorBundle\Monitoring\Metric\AbstractMetric;
 
 class EmailQueue extends AbstractMetric

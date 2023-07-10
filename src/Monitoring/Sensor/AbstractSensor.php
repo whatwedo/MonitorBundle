@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace whatwedo\MonitorBundle\Monitoring\Sensor;
 
-use whatwedo\MonitorBundle\Enum\SensorStateEnum;
+use whatwedo\MonitorBundle\Enums\SensorStateEnum;
 use whatwedo\MonitorBundle\Monitoring\AttributeInterface;
 
 abstract class AbstractSensor implements AttributeInterface

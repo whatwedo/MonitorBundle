@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace whatwedo\MonitorBundle\Normalizer;
 
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use whatwedo\MonitorBundle\Enum\MetricStateEnum;
-use whatwedo\MonitorBundle\Enum\SensorStateEnum;
+use whatwedo\MonitorBundle\Enums\MetricStateEnum;
+use whatwedo\MonitorBundle\Enums\SensorStateEnum;
 
 class EnumNormalizer implements NormalizerInterface
 {

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace whatwedo\MonitorBundle\Manager;
 
-use whatwedo\MonitorBundle\Enum\MetricStateEnum;
-use whatwedo\MonitorBundle\Enum\SensorStateEnum;
+use whatwedo\MonitorBundle\Enums\MetricStateEnum;
+use whatwedo\MonitorBundle\Enums\SensorStateEnum;
 use whatwedo\MonitorBundle\Monitoring\AttributeInterface;
 use whatwedo\MonitorBundle\Monitoring\Sensor\AbstractSensor;
 

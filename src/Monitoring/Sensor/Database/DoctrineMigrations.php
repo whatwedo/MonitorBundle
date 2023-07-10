@@ -6,7 +6,7 @@ namespace whatwedo\MonitorBundle\Monitoring\Sensor\Database;
 
 use Doctrine\Migrations\DependencyFactory;
 use Doctrine\Migrations\Version\MigrationStatusCalculator;
-use whatwedo\MonitorBundle\Enum\SensorStateEnum;
+use whatwedo\MonitorBundle\Enums\SensorStateEnum;
 use whatwedo\MonitorBundle\Monitoring\Sensor\AbstractSensor;
 
 class DoctrineMigrations extends AbstractSensor

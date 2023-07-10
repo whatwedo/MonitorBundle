@@ -32,7 +32,7 @@ namespace whatwedo\MonitorBundle\Monitoring\Sensor\Service;
 use Symfony\Component\Mercure\Exception\RuntimeException;
 use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Mercure\Update;
-use whatwedo\MonitorBundle\Enum\SensorStateEnum;
+use whatwedo\MonitorBundle\Enums\SensorStateEnum;
 use whatwedo\MonitorBundle\Monitoring\Sensor\AbstractSensor;
 
 class Mercure extends AbstractSensor

@@ -9,7 +9,7 @@ use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 use Psr\Container\ContainerInterface;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
-use whatwedo\MonitorBundle\Enum\SensorStateEnum;
+use whatwedo\MonitorBundle\Enums\SensorStateEnum;
 use whatwedo\MonitorBundle\Monitoring\Sensor\AbstractSensor;
 
 class DoctrineDbal extends AbstractSensor implements ServiceSubscriberInterface
