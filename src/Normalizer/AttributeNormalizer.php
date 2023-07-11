@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace whatwedo\MonitorBundle\Normalizer;
 
-use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use whatwedo\MonitorBundle\Monitoring\AttributeInterface;
 use whatwedo\MonitorBundle\Monitoring\Metric\AbstractMetric;
 use whatwedo\MonitorBundle\Monitoring\Sensor\AbstractSensor;
 
-class AttributeNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface
+class AttributeNormalizer implements NormalizerInterface
 {
     /**
      * @param AttributeInterface $object
@@ -39,8 +38,10 @@ class AttributeNormalizer implements NormalizerInterface, CacheableSupportsMetho
         return $data instanceof AttributeInterface;
     }
 
-    public function hasCacheableSupportsMethod(): bool
+    public function getSupportedTypes(?string $format): array
     {
-        return true;
+        return [
+            AttributeInterface::class => true,
+        ];
     }
 }

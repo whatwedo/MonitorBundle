@@ -36,8 +36,8 @@ class DashboardControllerTest extends KernelTestCase
     {
         return self::bootKernel([
             'config' => static function (TestKernel $kernel) {
-                $kernel->addTestRoutingFile(__DIR__ . '/config/routes.yml');
-                $kernel->addTestConfig(__DIR__ . '/../config/dummy.yml');
+                $kernel->addTestRoutingFile(__DIR__.'/config/routes.yml');
+                $kernel->addTestConfig(__DIR__.'/../config/dummy.yml');
                 $kernel->addTestBundle(TwigBundle::class);
             },
         ]);

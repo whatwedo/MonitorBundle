@@ -1,4 +1,6 @@
-[![Latest Stable Version](https://poser.pugx.org/whatwedo/monitor-bundle/v/stable)](https://packagist.org/packages/whatwedo/monitor-bundle)
+![GitHub Actions](https://github.com/whatwedo/MonitorBundle/actions/workflows/ci.yaml/badge.svg)
+[![PHP Version Require](http://poser.pugx.org/whatwedo/monitor-bundle/require/php)](https://packagist.org/packages/whatwedo/monitor-bundle)
+[![Latest Stable Version](http://poser.pugx.org/whatwedo/monitor-bundle/v)](https://packagist.org/packages/whatwedo/monitor-bundle)
 [![SymfonyInsight](https://insight.symfony.com/projects/b36c4c03-ddc3-42dc-b86f-d9263c36dcc2/mini.svg)](https://insight.symfony.com/projects/b36c4c03-ddc3-42dc-b86f-d9263c36dcc2)
 [![codecov](https://codecov.io/github/whatwedo/MonitorBundle/branch/main/graph/badge.svg?token=U0LO4ZH9ZG)](https://codecov.io/github/whatwedo/MonitorBundle)
 

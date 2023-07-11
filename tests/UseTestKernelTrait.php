@@ -15,7 +15,7 @@ trait UseTestKernelTrait
         /** @var TestKernel $kernel */
         $kernel = parent::createKernel($options);
         $kernel->addTestBundle(whatwedoMonitorBundle::class);
-        $kernel->addTestConfig(__DIR__ . '/config/framework.yml');
+        $kernel->addTestConfig(__DIR__.'/config/framework.yml');
         $kernel->handleOptions($options);
 
         return $kernel;

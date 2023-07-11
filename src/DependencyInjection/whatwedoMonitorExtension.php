@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace whatwedo\MonitorBundle\DependencyInjection;
 
-use PHPUnit\Framework\MockObject\Api;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -23,12 +22,12 @@ use whatwedo\MonitorBundle\Monitoring\Metric\Messenger\QueuedMessages;
  */
 class whatwedoMonitorExtension extends Extension implements PrependExtensionInterface
 {
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yaml');
 
         // tag monitoring attributes (sensors and metrics)
@@ -43,7 +42,10 @@ class whatwedoMonitorExtension extends Extension implements PrependExtensionInte
     {
         // register API
         $container->findDefinition(ApiController::class)
-            ->addArgument($config['endpoint']['api']['auth_token'] ?? null);
+            ->addArgument($config['endpoint']['api']['http_status_code']['warning'] ?? 503)
+            ->addArgument($config['endpoint']['api']['http_status_code']['critical'] ?? 503)
+            ->addArgument($config['endpoint']['api']['auth_token'] ?? null)
+        ;
 
         if (isset($config['endpoint']['api']['enabled'])
             && ! $config['endpoint']['api']['enabled']) {
@@ -68,9 +70,16 @@ class whatwedoMonitorExtension extends Extension implements PrependExtensionInte
         $container->findDefinition(QueuedMessages::class)
             ->setArgument(0, $config['monitoring']['metric']['messenger']['queued_messages']['warning_threshold'] ?? 5)
             ->setArgument(1, $config['monitoring']['metric']['messenger']['queued_messages']['critical_threshold'] ?? 10);
+        if (!(isset($config['endpoint']['command']['enabled'])
+            && ! $config['endpoint']['command']['enabled'])) {
+            $container->findDefinition(CheckCommand::class)
+                ->setArgument(0, $config['endpoint']['command']['exit_code']['warning'] ?? 1)
+                ->setArgument(1, $config['endpoint']['command']['exit_code']['critical'] ?? 1)
+            ;
+        }
     }
 
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
     }
 }

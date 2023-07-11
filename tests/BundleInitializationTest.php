@@ -27,7 +27,7 @@ class BundleInitializationTest extends KernelTestCase
     {
         $kernel = self::bootKernel([
             'config' => static function (TestKernel $kernel) {
-                $kernel->addTestConfig(__DIR__ . '/config/disabled_api.yml');
+                $kernel->addTestConfig(__DIR__.'/config/disabled_api.yml');
             },
         ]);
 
@@ -38,7 +38,7 @@ class BundleInitializationTest extends KernelTestCase
     {
         $kernel = self::bootKernel([
             'config' => static function (TestKernel $kernel) {
-                $kernel->addTestConfig(__DIR__ . '/config/disabled_controller.yml');
+                $kernel->addTestConfig(__DIR__.'/config/disabled_controller.yml');
             },
         ]);
 
@@ -49,7 +49,7 @@ class BundleInitializationTest extends KernelTestCase
     {
         $kernel = self::bootKernel([
             'config' => static function (TestKernel $kernel) {
-                $kernel->addTestConfig(__DIR__ . '/config/disabled_command.yml');
+                $kernel->addTestConfig(__DIR__.'/config/disabled_command.yml');
             },
         ]);
 

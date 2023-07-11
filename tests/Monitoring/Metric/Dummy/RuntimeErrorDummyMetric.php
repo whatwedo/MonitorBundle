@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 /*
- * Copyright (c) 2021, whatwedo GmbH
+ * Copyright (c) 2023, whatwedo GmbH
  * All rights reserved
  *
  * Redistribution and use in source and binary forms, with or without
@@ -27,45 +27,24 @@ declare(strict_types=1);
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace whatwedo\MonitorBundle\Monitoring\Sensor\Service;
+namespace whatwedo\MonitorBundle\Tests\Monitoring\Metric\Dummy;
 
-use Symfony\Component\Mercure\Exception\RuntimeException;
-use Symfony\Component\Mercure\HubInterface;
-use Symfony\Component\Mercure\Update;
-use whatwedo\MonitorBundle\Enums\SensorStateEnum;
-use whatwedo\MonitorBundle\Monitoring\Sensor\AbstractSensor;
+use whatwedo\MonitorBundle\Monitoring\Metric\AbstractMetric;
 
-class Mercure extends AbstractSensor
+class RuntimeErrorDummyMetric extends AbstractMetric
 {
-    public function __construct(
-        protected ?HubInterface $hub = null
-    ) {
-    }
-
     public function getName(): string
     {
-        return 'Mercure';
+        return 'Runtime Error Test';
     }
 
     public function isEnabled(): bool
     {
-        return $this->hub instanceof HubInterface;
+        return true;
     }
 
     public function run(): void
     {
-        $this->details['url'] = $this->hub->getUrl();
-        $this->details['public_url'] = $this->hub->getPublicUrl();
-
-        try {
-            /** @noinspection PhpUnhandledExceptionInspection */
-            $this->hub->publish(new Update('/check', json_encode([
-                'success' => true,
-            ], JSON_THROW_ON_ERROR)));
-            $this->state = SensorStateEnum::SUCCESSFUL;
-        } catch (RuntimeException $e) {
-            $this->state = SensorStateEnum::CRITICAL;
-            $this->details['error'] = $e->getMessage();
-        }
+        // do not set state!
     }
 }

@@ -12,7 +12,7 @@ use whatwedo\MonitorBundle\Manager\MonitoringManager;
 use whatwedo\MonitorBundle\Monitoring\AttributeInterface;
 use whatwedo\MonitorBundle\Tests\UseTestKernelTrait;
 
-abstract class AbstractMonitoringTest extends KernelTestCase
+abstract class AbstractMonitoring extends KernelTestCase
 {
     use UseTestKernelTrait;
 

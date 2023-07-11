@@ -12,11 +12,11 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 use whatwedo\MonitorBundle\Manager\MonitoringManager;
 use whatwedo\MonitorBundle\Monitoring\Sensor\Database\DoctrineMigrations;
-use whatwedo\MonitorBundle\Tests\Monitoring\AbstractMonitoringTest;
+use whatwedo\MonitorBundle\Tests\Monitoring\AbstractMonitoring;
 use whatwedo\MonitorBundle\Tests\Monitoring\Sensor\Database\Migrations\Version1;
 use whatwedo\MonitorBundle\Tests\UseTestKernelTrait;
 
-class DoctrineMigrationsTest extends AbstractMonitoringTest
+class DoctrineMigrations extends AbstractMonitoring
 {
     use UseTestKernelTrait;
 
@@ -54,20 +54,20 @@ class DoctrineMigrationsTest extends AbstractMonitoringTest
     {
         $kernel->addTestBundle(DoctrineBundle::class);
         $kernel->addTestBundle(DoctrineMigrationsBundle::class);
-        $kernel->addTestConfig(__DIR__ . '/config/doctrine_dbal_successful.yml');
-        $kernel->addTestConfig(__DIR__ . '/config/doctrine_migrations.yml');
+        $kernel->addTestConfig(__DIR__.'/config/doctrine_dbal_successful.yml');
+        $kernel->addTestConfig(__DIR__.'/config/doctrine_migrations.yml');
     }
 
     public static function configureFailureKernel(TestKernel $kernel): void
     {
         $kernel->addTestBundle(DoctrineBundle::class);
         $kernel->addTestBundle(DoctrineMigrationsBundle::class);
-        $kernel->addTestConfig(__DIR__ . '/config/doctrine_dbal_successful.yml');
-        $kernel->addTestConfig(__DIR__ . '/config/doctrine_migrations.yml');
+        $kernel->addTestConfig(__DIR__.'/config/doctrine_dbal_successful.yml');
+        $kernel->addTestConfig(__DIR__.'/config/doctrine_migrations.yml');
     }
 
     protected function getMonitoringClass(): string
     {
-        return DoctrineMigrations::class;
+        return self::class;
     }
 }

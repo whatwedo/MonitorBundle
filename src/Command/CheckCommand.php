@@ -12,6 +12,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use whatwedo\MonitorBundle\Manager\MonitoringManager;
 use whatwedo\MonitorBundle\Monitoring\Metric\AbstractMetric;
 use whatwedo\MonitorBundle\Monitoring\Sensor\AbstractSensor;
+use whatwedo\MonitorBundle\Util\StatusCodeDecider;
 
 #[AsCommand(
     name: 'whatwedo:monitor:check',
@@ -20,6 +21,8 @@ use whatwedo\MonitorBundle\Monitoring\Sensor\AbstractSensor;
 class CheckCommand extends Command
 {
     public function __construct(
+        protected int $warningExitCode,
+        protected int $criticalExitCode,
         protected MonitoringManager $monitoringManager
     ) {
         parent::__construct();
@@ -30,7 +33,8 @@ class CheckCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $this->printResult($io, $this->monitoringManager->getResult());
 
-        return $this->monitoringManager->isSuccessful() ? static::SUCCESS : static::FAILURE;
+        $decider = new StatusCodeDecider($this->monitoringManager, self::SUCCESS, $this->warningExitCode, $this->criticalExitCode);
+        return $decider->decide();
     }
 
     private function printResult(SymfonyStyle $io, $result, $previousGroup = null, $level = 0): void

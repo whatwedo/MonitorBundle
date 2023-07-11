@@ -19,7 +19,7 @@ class ApiControllerTest extends KernelTestCase
         $client = $this->getClient($this->getApiKernel());
         $client->request('GET', '/api.json');
         $this->assertEquals(503, $client->getResponse()->getStatusCode());
-        $this->assertJsonStringEqualsJsonFile(__DIR__ . '/responses/result.json', $client->getResponse()->getContent());
+        $this->assertJsonStringEqualsJsonFile(__DIR__.'/responses/result.json', $client->getResponse()->getContent());
     }
 
     public function testApiJsonPretty(): void
@@ -27,7 +27,7 @@ class ApiControllerTest extends KernelTestCase
         $client = $this->getClient($this->getApiKernel());
         $client->request('GET', '/api.json?pretty');
         $this->assertEquals(503, $client->getResponse()->getStatusCode());
-        $this->assertJsonStringEqualsJsonFile(__DIR__ . '/responses/result_pretty.json', $client->getResponse()->getContent());
+        $this->assertJsonStringEqualsJsonFile(__DIR__.'/responses/result_pretty.json', $client->getResponse()->getContent());
     }
 
     public function testApiXml(): void
@@ -35,7 +35,7 @@ class ApiControllerTest extends KernelTestCase
         $client = $this->getClient($this->getApiKernel());
         $client->request('GET', '/api.xml');
         $this->assertEquals(503, $client->getResponse()->getStatusCode());
-        $this->assertXmlStringEqualsXmlFile(__DIR__ . '/responses/result.xml', $client->getResponse()->getContent());
+        $this->assertXmlStringEqualsXmlFile(__DIR__.'/responses/result.xml', $client->getResponse()->getContent());
     }
 
     public function testApiProtectedSuccessful(): void
@@ -63,12 +63,29 @@ class ApiControllerTest extends KernelTestCase
         $this->assertEquals(401, $client->getResponse()->getStatusCode());
     }
 
+    public function testApiCriticalCustomHttpStatusCode(): void
+    {
+        $client = $this->getClient($this->getApiKernelCriticalCustomHttpStatusCode());
+        $client->request('GET', '/api.json');
+        $this->assertEquals(500, $client->getResponse()->getStatusCode());
+    }
+
     protected function getApiKernel(): KernelInterface
     {
         return self::bootKernel([
             'config' => static function (TestKernel $kernel) {
-                $kernel->addTestConfig(__DIR__ . '/../config/dummy.yml');
-                $kernel->addTestRoutingFile(__DIR__ . '/config/routes.yml');
+                $kernel->addTestConfig(__DIR__.'/../config/dummy.yml');
+                $kernel->addTestRoutingFile(__DIR__.'/config/routes.yml');
+            },
+        ]);
+    }
+
+    protected function getApiKernelCriticalCustomHttpStatusCode(): KernelInterface
+    {
+        return self::bootKernel([
+            'config' => static function (TestKernel $kernel) {
+                $kernel->addTestConfig(__DIR__.'/../config/dummy_critical_custom_http_status_code.yml');
+                $kernel->addTestRoutingFile(__DIR__.'/config/routes.yml');
             },
         ]);
     }
@@ -77,8 +94,8 @@ class ApiControllerTest extends KernelTestCase
     {
         return self::bootKernel([
             'config' => static function (TestKernel $kernel) {
-                $kernel->addTestRoutingFile(__DIR__ . '/config/routes.yml');
-                $kernel->addTestConfig(__DIR__ . '/config/protected_api.yml');
+                $kernel->addTestRoutingFile(__DIR__.'/config/routes.yml');
+                $kernel->addTestConfig(__DIR__.'/config/protected_api.yml');
             },
         ]);
     }
