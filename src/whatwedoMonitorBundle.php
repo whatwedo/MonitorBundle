@@ -10,7 +10,7 @@ use whatwedo\MonitorBundle\DependencyInjection\CompilerPass\AttributeCompilerPas
 
 class whatwedoMonitorBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 

@@ -1,0 +1,12 @@
+services:
+  whatwedo\MonitorBundle\Tests\Monitoring\Sensor\Dummy\CriticalDummySensor:
+    tags: [ 'whatwedo_monitor.attribute' ]
+
+  whatwedo\MonitorBundle\Tests\Monitoring\Metric\Dummy\CriticalDummyMetric:
+    tags: [ 'whatwedo_monitor.attribute' ]
+
+whatwedo_monitor:
+  endpoint:
+    command:
+      exit_code:
+        critical: -1

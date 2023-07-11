@@ -11,7 +11,7 @@ use whatwedo\MonitorBundle\Manager\MonitoringManager;
 
 class AttributeCompilerPass implements CompilerPassInterface
 {
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $definition = $container->getDefinition(MonitoringManager::class);
 

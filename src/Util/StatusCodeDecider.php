@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 /*
- * Copyright (c) 2021, whatwedo GmbH
+ * Copyright (c) 2023, whatwedo GmbH
  * All rights reserved
  *
  * Redistribution and use in source and binary forms, with or without
@@ -27,45 +27,28 @@ declare(strict_types=1);
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace whatwedo\MonitorBundle\Monitoring\Sensor\Service;
+namespace whatwedo\MonitorBundle\Util;
 
-use Symfony\Component\Mercure\Exception\RuntimeException;
-use Symfony\Component\Mercure\HubInterface;
-use Symfony\Component\Mercure\Update;
-use whatwedo\MonitorBundle\Enums\SensorStateEnum;
-use whatwedo\MonitorBundle\Monitoring\Sensor\AbstractSensor;
+use whatwedo\MonitorBundle\Manager\MonitoringManager;
 
-class Mercure extends AbstractSensor
+class StatusCodeDecider
 {
     public function __construct(
-        protected ?HubInterface $hub = null
+        protected MonitoringManager $monitoringManager,
+        protected int $successStatusCode,
+        protected int $warningStatusCode,
+        protected int $criticalStatusCode
     ) {
     }
 
-    public function getName(): string
+    public function decide(): int
     {
-        return 'Mercure';
-    }
-
-    public function isEnabled(): bool
-    {
-        return $this->hub instanceof HubInterface;
-    }
-
-    public function run(): void
-    {
-        $this->details['url'] = $this->hub->getUrl();
-        $this->details['public_url'] = $this->hub->getPublicUrl();
-
-        try {
-            /** @noinspection PhpUnhandledExceptionInspection */
-            $this->hub->publish(new Update('/check', json_encode([
-                'success' => true,
-            ], JSON_THROW_ON_ERROR)));
-            $this->state = SensorStateEnum::SUCCESSFUL;
-        } catch (RuntimeException $e) {
-            $this->state = SensorStateEnum::CRITICAL;
-            $this->details['error'] = $e->getMessage();
+        if ($this->monitoringManager->isSuccessful() && $this->monitoringManager->isWarning()) {
+            return $this->warningStatusCode;
+        } elseif ($this->monitoringManager->isSuccessful()) {
+            return $this->successStatusCode;
         }
+
+        return $this->criticalStatusCode;
     }
 }

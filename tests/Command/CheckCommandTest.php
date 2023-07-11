@@ -18,7 +18,7 @@ class CheckCommandTest extends KernelTestCase
     {
         $kernel = self::bootKernel([
             'config' => static function (TestKernel $kernel) {
-                $kernel->addTestConfig(__DIR__ . '/../config/dummy_successful.yml');
+                $kernel->addTestConfig(__DIR__.'/../config/dummy_successful.yml');
             },
         ]);
 
@@ -28,5 +28,88 @@ class CheckCommandTest extends KernelTestCase
         $commandTester = new CommandTester($command);
         $commandTester->execute([]);
         self::assertEquals(0, $commandTester->getStatusCode());
+    }
+
+    public function testWarning(): void
+    {
+        $kernel = self::bootKernel([
+            'config' => static function (TestKernel $kernel) {
+                $kernel->addTestConfig(__DIR__.'/../config/dummy_warning.yml');
+            },
+        ]);
+
+        $application = new Application($kernel);
+        $command = $application->find('whatwedo:monitor:check');
+
+        $commandTester = new CommandTester($command);
+        $commandTester->execute([]);
+        self::assertEquals(1, $commandTester->getStatusCode());
+    }
+
+    public function testWarningCustomExitCode(): void
+    {
+        $kernel = self::bootKernel([
+            'config' => static function (TestKernel $kernel) {
+                $kernel->addTestConfig(__DIR__.'/../config/dummy_warning_custom_exit_code.yml');
+            },
+        ]);
+
+        $application = new Application($kernel);
+        $command = $application->find('whatwedo:monitor:check');
+
+        $commandTester = new CommandTester($command);
+        $commandTester->execute([]);
+        self::assertEquals(2, $commandTester->getStatusCode());
+    }
+
+    public function testCritical(): void
+    {
+        $kernel = self::bootKernel([
+            'config' => static function (TestKernel $kernel) {
+                $kernel->addTestConfig(__DIR__.'/../config/dummy_critical.yml');
+            },
+        ]);
+        $application = new Application($kernel);
+        $command = $application->find('whatwedo:monitor:check');
+
+        $commandTester = new CommandTester($command);
+        $commandTester->execute([]);
+        self::assertEquals(1, $commandTester->getStatusCode());
+    }
+
+    public function testCriticalCustomExitCode(): void
+    {
+        $kernel = self::bootKernel([
+            'config' => static function (TestKernel $kernel) {
+                $kernel->addTestConfig(__DIR__.'/../config/dummy_critical_custom_exit_code.yml');
+            },
+        ]);
+        $application = new Application($kernel);
+        $command = $application->find('whatwedo:monitor:check');
+
+        $commandTester = new CommandTester($command);
+        $commandTester->execute([]);
+        self::assertEquals(-1, $commandTester->getStatusCode());
+    }
+
+    public function testRuntimeError(): void
+    {
+        $kernel = self::bootKernel([
+            'config' => static function (TestKernel $kernel) {
+                $kernel->addTestConfig(__DIR__.'/../config/dummy_runtime_error.yml');
+            },
+        ]);
+        $application = new Application($kernel);
+        $command = $application->find('whatwedo:monitor:check');
+
+        $commandTester = new CommandTester($command);
+        $runtimeException = false;
+        try {
+            $commandTester->execute([]);
+        } catch (\RuntimeException $e) {
+            $runtimeException = true;
+        } finally {
+            self::assertTrue($runtimeException);
+        }
     }
 }

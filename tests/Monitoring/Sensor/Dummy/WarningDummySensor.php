@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace whatwedo\MonitorBundle\Tests\Monitoring\Sensor\Dummy;
 
-use whatwedo\MonitorBundle\Enum\SensorStateEnum;
+use whatwedo\MonitorBundle\Enums\SensorStateEnum;
 use whatwedo\MonitorBundle\Monitoring\Sensor\AbstractSensor;
 
 class WarningDummySensor extends AbstractSensor

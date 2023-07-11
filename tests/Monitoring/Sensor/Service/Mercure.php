@@ -9,12 +9,12 @@ use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Bundle\MercureBundle\MercureBundle;
 use Symfony\Component\Mercure\Exception\RuntimeException;
 use Symfony\Component\Mercure\HubInterface;
-use whatwedo\MonitorBundle\Enum\SensorStateEnum;
+use whatwedo\MonitorBundle\Enums\SensorStateEnum;
 use whatwedo\MonitorBundle\Monitoring\Sensor\Service\Mercure;
-use whatwedo\MonitorBundle\Tests\Monitoring\AbstractMonitoringTest;
+use whatwedo\MonitorBundle\Tests\Monitoring\AbstractMonitoring;
 use whatwedo\MonitorBundle\Tests\UseTestKernelTrait;
 
-class MercureTest extends AbstractMonitoringTest
+class Mercure extends AbstractMonitoring
 {
     use UseTestKernelTrait;
 
@@ -23,7 +23,7 @@ class MercureTest extends AbstractMonitoringTest
         $hub = $this->getHub();
         $hub->method('publish')->willReturn('');
 
-        $attribute = new Mercure($hub);
+        $attribute = new self($hub);
         $attribute->run();
         self::assertEquals(SensorStateEnum::SUCCESSFUL, $attribute->getState());
     }
@@ -33,7 +33,7 @@ class MercureTest extends AbstractMonitoringTest
         $hub = $this->getHub();
         $hub->method('publish')->willThrowException(new RuntimeException());
 
-        $attribute = new Mercure($hub);
+        $attribute = new self($hub);
         $attribute->run();
         self::assertEquals(SensorStateEnum::CRITICAL, $attribute->getState());
     }
@@ -41,7 +41,7 @@ class MercureTest extends AbstractMonitoringTest
     public static function configureSuccessfulKernel(TestKernel $kernel): void
     {
         $kernel->addTestBundle(MercureBundle::class);
-        $kernel->addTestConfig(__DIR__ . '/config/mercure.yml');
+        $kernel->addTestConfig(__DIR__.'/config/mercure.yml');
     }
 
     protected function getHub(): MockObject&HubInterface
@@ -55,6 +55,6 @@ class MercureTest extends AbstractMonitoringTest
 
     protected function getMonitoringClass(): string
     {
-        return Mercure::class;
+        return self::class;
     }
 }

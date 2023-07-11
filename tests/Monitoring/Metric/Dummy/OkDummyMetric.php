@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace whatwedo\MonitorBundle\Tests\Monitoring\Metric\Dummy;
 
-use whatwedo\MonitorBundle\Enum\MetricStateEnum;
+use whatwedo\MonitorBundle\Enums\MetricStateEnum;
 use whatwedo\MonitorBundle\Monitoring\Metric\AbstractMetric;
 
 class OkDummyMetric extends AbstractMetric

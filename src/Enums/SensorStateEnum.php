@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace whatwedo\MonitorBundle\Enum;
+namespace whatwedo\MonitorBundle\Enums;
 
 enum SensorStateEnum: string
 {

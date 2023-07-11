@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace whatwedo\MonitorBundle\Manager;
 
-use whatwedo\MonitorBundle\Enum\MetricStateEnum;
-use whatwedo\MonitorBundle\Enum\SensorStateEnum;
+use whatwedo\MonitorBundle\Enums\MetricStateEnum;
+use whatwedo\MonitorBundle\Enums\SensorStateEnum;
 use whatwedo\MonitorBundle\Monitoring\AttributeInterface;
-use whatwedo\MonitorBundle\Monitoring\Metric\AbstractMetric;
 use whatwedo\MonitorBundle\Monitoring\Sensor\AbstractSensor;
 
 class MonitoringManager
@@ -19,18 +18,23 @@ class MonitoringManager
 
     protected ?bool $isSuccessful = null;
 
+    protected ?bool $hasWarnings = null;
+
     public function run(): void
     {
         $this->isSuccessful = true;
+        $this->hasWarnings = false;
 
         foreach ($this->attributes as $attribute) {
             if ($attribute->isEnabled()) {
                 $attribute->run();
-                if (($attribute instanceof AbstractSensor
-                        && $attribute->getState() !== SensorStateEnum::SUCCESSFUL)
-                    || ($attribute instanceof AbstractMetric
-                        && $attribute->getState() !== MetricStateEnum::OK)) {
+                $wasSuccessful = $this->wasSuccessful($attribute);
+                $wasWarning = $this->wasWarning($attribute);
+                if (!$wasSuccessful && !$wasWarning) {
                     $this->isSuccessful = false;
+                }
+                if ($wasWarning) {
+                    $this->hasWarnings = true;
                 }
             }
         }
@@ -81,6 +85,15 @@ class MonitoringManager
         return $this->isSuccessful;
     }
 
+    public function isWarning(): bool
+    {
+        if ($this->hasWarnings === null) {
+            $this->run();
+        }
+
+        return $this->hasWarnings;
+    }
+
     public function addAttribute(AttributeInterface $attribute): void
     {
         $this->attributes[$attribute::class] = $attribute;
@@ -89,5 +102,19 @@ class MonitoringManager
     public function getAttribute(string $className): AttributeInterface
     {
         return $this->attributes[$className];
+    }
+
+    private function wasSuccessful(AttributeInterface $attribute): bool
+    {
+        return $attribute instanceof AbstractSensor
+            ? $attribute->getState() === SensorStateEnum::SUCCESSFUL
+            : $attribute->getState() === MetricStateEnum::OK;
+    }
+
+    private function wasWarning(AttributeInterface $abstract): bool
+    {
+        return $abstract instanceof AbstractSensor
+            ? $abstract->getState() === SensorStateEnum::WARNING
+            : $abstract->getState() === MetricStateEnum::WARNING;
     }
 }
