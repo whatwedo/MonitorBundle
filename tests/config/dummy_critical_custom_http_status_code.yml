@@ -7,6 +7,6 @@ services:
 
 whatwedo_monitor:
   endpoint:
-    command:
-      exit_code:
-        critical: -1
+    api:
+      http_status_code:
+        critical: 500

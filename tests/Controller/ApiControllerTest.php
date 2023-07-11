@@ -63,11 +63,28 @@ class ApiControllerTest extends KernelTestCase
         $this->assertEquals(401, $client->getResponse()->getStatusCode());
     }
 
+    public function testApiCriticalCustomHttpStatusCode(): void
+    {
+        $client = $this->getClient($this->getApiKernelCriticalCustomHttpStatusCode());
+        $client->request('GET', '/api.json');
+        $this->assertEquals(500, $client->getResponse()->getStatusCode());
+    }
+
     protected function getApiKernel(): KernelInterface
     {
         return self::bootKernel([
             'config' => static function (TestKernel $kernel) {
                 $kernel->addTestConfig(__DIR__.'/../config/dummy.yml');
+                $kernel->addTestRoutingFile(__DIR__.'/config/routes.yml');
+            },
+        ]);
+    }
+
+    protected function getApiKernelCriticalCustomHttpStatusCode(): KernelInterface
+    {
+        return self::bootKernel([
+            'config' => static function (TestKernel $kernel) {
+                $kernel->addTestConfig(__DIR__.'/../config/dummy_critical_custom_http_status_code.yml');
                 $kernel->addTestRoutingFile(__DIR__.'/config/routes.yml');
             },
         ]);

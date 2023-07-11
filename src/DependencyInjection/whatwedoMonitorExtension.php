@@ -42,8 +42,8 @@ class whatwedoMonitorExtension extends Extension implements PrependExtensionInte
     {
         // register API
         $container->findDefinition(ApiController::class)
-            ->addArgument($config['endpoint']['api']['exit_code']['warning'] ?? 503)
-            ->addArgument($config['endpoint']['api']['exit_code']['critical'] ?? 503)
+            ->addArgument($config['endpoint']['api']['http_status_code']['warning'] ?? 503)
+            ->addArgument($config['endpoint']['api']['http_status_code']['critical'] ?? 503)
             ->addArgument($config['endpoint']['api']['auth_token'] ?? null)
         ;
 
