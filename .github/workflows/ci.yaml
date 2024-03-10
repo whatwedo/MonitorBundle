@@ -35,7 +35,7 @@ jobs:
               uses: php-actions/phpunit@v3
               env:
                 XDEBUG_MODE: coverage
-                ACTION_PHPUNIT_PATH: ./vendor/bin/phpunit
+                ACTION_PHPUNIT_PATH: ./vendor/bin/simple-phpunit
               with:
                 configuration: phpunit.xml.dist
                 php_extensions: xdebug
