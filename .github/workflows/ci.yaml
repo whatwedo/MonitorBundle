@@ -12,7 +12,10 @@ jobs:
             matrix:
                 operating-system: [ ubuntu-latest ]
                 php: [ '8.1', '8.2' ]
-                symfony: ['6.3.*']
+                symfony: [ '6.3.*', '6.4.*', '7.0.*' ]
+                exclude:
+                  - php: '8.1'
+                    symfony: '7.0.*'
 
         steps:
             - uses: actions/checkout@master
@@ -32,11 +35,12 @@ jobs:
               uses: php-actions/phpunit@v3
               env:
                 XDEBUG_MODE: coverage
-                ACTION_PHPUNIT_PATH: ./vendor/bin/phpunit
+                ACTION_PHPUNIT_PATH: ./vendor/bin/simple-phpunit
               with:
                 configuration: phpunit.xml.dist
                 php_extensions: xdebug
                 args: tests --coverage-clover ./coverage.xml
+                version: 9
 
             - name: Upload to Codecov
               uses: codecov/codecov-action@v2

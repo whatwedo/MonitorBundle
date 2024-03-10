@@ -10,7 +10,6 @@ use Symfony\Bundle\MercureBundle\MercureBundle;
 use Symfony\Component\Mercure\Exception\RuntimeException;
 use Symfony\Component\Mercure\HubInterface;
 use whatwedo\MonitorBundle\Enums\SensorStateEnum;
-use whatwedo\MonitorBundle\Monitoring\Sensor\Service\Mercure;
 use whatwedo\MonitorBundle\Tests\Monitoring\AbstractMonitoring;
 use whatwedo\MonitorBundle\Tests\UseTestKernelTrait;
 
