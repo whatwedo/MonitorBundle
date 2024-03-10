@@ -6,7 +6,6 @@ namespace whatwedo\MonitorBundle\Tests\Monitoring\Metric\Messenger;
 
 use Symfony\Component\DependencyInjection\ServiceLocator;
 use whatwedo\MonitorBundle\Enums\MetricStateEnum;
-use whatwedo\MonitorBundle\Monitoring\Metric\Messenger\QueuedMessages;
 use whatwedo\MonitorBundle\Tests\Monitoring\AbstractMonitoring;
 use whatwedo\MonitorBundle\Tests\Monitoring\Metric\Messenger\Transport\MockTransport;
 use whatwedo\MonitorBundle\Tests\UseTestKernelTrait;

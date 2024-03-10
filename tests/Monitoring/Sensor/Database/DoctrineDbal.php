@@ -6,7 +6,6 @@ namespace whatwedo\MonitorBundle\Tests\Monitoring\Sensor\Database;
 
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Nyholm\BundleTest\TestKernel;
-use whatwedo\MonitorBundle\Monitoring\Sensor\Database\DoctrineDbal;
 use whatwedo\MonitorBundle\Tests\Monitoring\AbstractMonitoring;
 use whatwedo\MonitorBundle\Tests\UseTestKernelTrait;
 
