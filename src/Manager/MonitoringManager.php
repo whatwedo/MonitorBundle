@@ -30,7 +30,7 @@ class MonitoringManager
                 $attribute->run();
                 $wasSuccessful = $this->wasSuccessful($attribute);
                 $wasWarning = $this->wasWarning($attribute);
-                if (!$wasSuccessful && !$wasWarning) {
+                if (! $wasSuccessful && ! $wasWarning) {
                     $this->isSuccessful = false;
                 }
                 if ($wasWarning) {
