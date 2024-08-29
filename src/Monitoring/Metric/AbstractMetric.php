@@ -7,7 +7,7 @@ namespace whatwedo\MonitorBundle\Monitoring\Metric;
 use whatwedo\MonitorBundle\Enums\MetricStateEnum;
 use whatwedo\MonitorBundle\Monitoring\AttributeInterface;
 
-abstract class AbstractMetric implements AttributeInterface
+abstract class AbstractMetric implements AttributeInterface, MetricStateInterface
 {
     public null|int|float $value = null;
 
@@ -16,7 +16,7 @@ abstract class AbstractMetric implements AttributeInterface
     public function getState(): MetricStateEnum
     {
         if ($this->state === null) {
-            throw new \RuntimeException(static::class.'::$state is not set.');
+            throw new \LogicException(static::class.'::$state is not set.');
         }
 
         return $this->state;

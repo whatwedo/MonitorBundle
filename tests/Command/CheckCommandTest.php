@@ -92,24 +92,24 @@ class CheckCommandTest extends KernelTestCase
         self::assertEquals(-1, $commandTester->getStatusCode());
     }
 
-    public function testRuntimeError(): void
+    public function testLogicError(): void
     {
         $kernel = self::bootKernel([
             'config' => static function (TestKernel $kernel) {
-                $kernel->addTestConfig(__DIR__.'/../config/dummy_runtime_error.yml');
+                $kernel->addTestConfig(__DIR__.'/../config/dummy_logic_error.yml');
             },
         ]);
         $application = new Application($kernel);
         $command = $application->find('whatwedo:monitor:check');
 
         $commandTester = new CommandTester($command);
-        $runtimeException = false;
+        $logicException = false;
         try {
             $commandTester->execute([]);
-        } catch (\RuntimeException $e) {
-            $runtimeException = true;
+        } catch (\LogicException $e) {
+            $logicException = true;
         } finally {
-            self::assertTrue($runtimeException);
+            self::assertTrue($logicException);
         }
     }
 }
