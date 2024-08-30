@@ -43,6 +43,12 @@ class CheckCommand extends Command
             $rows = [];
             $subs = [];
             foreach ($items as $subGroup => $row) {
+                if (is_array($row)) {
+                    $subs[$subGroup] = $row;
+
+                    continue;
+                }
+
                 if ($row instanceof AbstractSensor) {
                     $rows[] = [
                         sprintf('<fg=%s;options=bold>%s</>', $row->getState()->getCliColor(), $row->getState()->getIcon()),
@@ -55,8 +61,6 @@ class CheckCommand extends Command
                         $row->getName(),
                         $row->getValue(),
                     ];
-                } elseif (is_array($row)) {
-                    $subs[$subGroup] = $row;
                 }
             }
 
