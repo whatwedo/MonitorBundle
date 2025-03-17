@@ -6,6 +6,7 @@ use PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes\ValidClassNameSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting\ClassCommentSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting\FileCommentSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting\FunctionCommentThrowTagSniff;
+use PhpCsFixer\Fixer\Phpdoc\NoSuperfluousPhpdocTagsFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 return static function (ECSConfig $containerConfigurator): void {
@@ -18,6 +19,7 @@ return static function (ECSConfig $containerConfigurator): void {
     $containerConfigurator->import('vendor/whatwedo/php-coding-standard/config/whatwedo-symfony.php');
 
     $containerConfigurator->skip([
+        NoSuperfluousPhpdocTagsFixer::class,
         FileCommentSniff::class,
         ClassCommentSniff::class,
         FunctionCommentThrowTagSniff::class,
