@@ -79,6 +79,9 @@ class whatwedoMonitorExtension extends Extension implements PrependExtensionInte
         }
     }
 
+    /**
+     * @return void
+     */
     public function prepend(ContainerBuilder $container): void
     {
     }
