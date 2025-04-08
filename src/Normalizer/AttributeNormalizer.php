@@ -20,7 +20,7 @@ class AttributeNormalizer implements NormalizerInterface, NormalizerAwareInterfa
     /**
      * @param AttributeInterface $object
      */
-    public function normalize($object, string $format = null, array $context = []): array
+    public function normalize($object, ?string $format = null, array $context = []): array
     {
         $data = [
             'name' => $object->getName(),
@@ -44,7 +44,7 @@ class AttributeNormalizer implements NormalizerInterface, NormalizerAwareInterfa
         return $data;
     }
 
-    public function supportsNormalization($data, string $format = null, array $context = []): bool
+    public function supportsNormalization($data, ?string $format = null, array $context = []): bool
     {
         return $data instanceof AttributeInterface;
     }

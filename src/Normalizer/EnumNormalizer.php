@@ -13,12 +13,12 @@ class EnumNormalizer implements NormalizerInterface
     /**
      * @param MetricStateEnum|SensorStateEnum $object
      */
-    public function normalize($object, string $format = null, array $context = []): string
+    public function normalize($object, ?string $format = null, array $context = []): string
     {
         return $object->value;
     }
 
-    public function supportsNormalization($data, string $format = null, array $context = []): bool
+    public function supportsNormalization($data, ?string $format = null, array $context = []): bool
     {
         return $data instanceof MetricStateEnum || $data instanceof SensorStateEnum;
     }
