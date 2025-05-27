@@ -11,7 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 use whatwedo\MonitorBundle\Manager\MonitoringManager;
-use whatwedo\MonitorBundle\Monitoring\Sensor\Database\DoctrineMigrations;
 use whatwedo\MonitorBundle\Tests\Monitoring\AbstractMonitoring;
 use whatwedo\MonitorBundle\Tests\Monitoring\Sensor\Database\Migrations\Version1;
 use whatwedo\MonitorBundle\Tests\UseTestKernelTrait;

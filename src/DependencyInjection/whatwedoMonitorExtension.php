@@ -70,7 +70,7 @@ class whatwedoMonitorExtension extends Extension implements PrependExtensionInte
         $container->findDefinition(QueuedMessages::class)
             ->setArgument(0, $config['monitoring']['metric']['messenger']['queued_messages']['warning_threshold'] ?? 5)
             ->setArgument(1, $config['monitoring']['metric']['messenger']['queued_messages']['critical_threshold'] ?? 10);
-        if (!(isset($config['endpoint']['command']['enabled'])
+        if (! (isset($config['endpoint']['command']['enabled'])
             && ! $config['endpoint']['command']['enabled'])) {
             $container->findDefinition(CheckCommand::class)
                 ->setArgument(0, $config['endpoint']['command']['exit_code']['warning'] ?? 1)
@@ -79,6 +79,9 @@ class whatwedoMonitorExtension extends Extension implements PrependExtensionInte
         }
     }
 
+    /**
+     * @return void
+     */
     public function prepend(ContainerBuilder $container): void
     {
     }

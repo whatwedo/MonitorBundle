@@ -10,6 +10,9 @@ use whatwedo\MonitorBundle\DependencyInjection\CompilerPass\AttributeCompilerPas
 
 class whatwedoMonitorBundle extends Bundle
 {
+    /**
+     * @return void
+     */
     public function build(ContainerBuilder $container): void
     {
         parent::build($container);

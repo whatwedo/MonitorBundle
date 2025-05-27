@@ -31,11 +31,11 @@ namespace whatwedo\MonitorBundle\Tests\Monitoring\Metric\Dummy;
 
 use whatwedo\MonitorBundle\Monitoring\Metric\AbstractMetric;
 
-class RuntimeErrorDummyMetric extends AbstractMetric
+class LogicErrorDummyMetric extends AbstractMetric
 {
     public function getName(): string
     {
-        return 'Runtime Error Test';
+        return 'Logic Error Test';
     }
 
     public function isEnabled(): bool

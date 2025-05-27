@@ -7,7 +7,8 @@ namespace whatwedo\MonitorBundle\Manager;
 use whatwedo\MonitorBundle\Enums\MetricStateEnum;
 use whatwedo\MonitorBundle\Enums\SensorStateEnum;
 use whatwedo\MonitorBundle\Monitoring\AttributeInterface;
-use whatwedo\MonitorBundle\Monitoring\Sensor\AbstractSensor;
+use whatwedo\MonitorBundle\Monitoring\Metric\MetricStateInterface;
+use whatwedo\MonitorBundle\Monitoring\Sensor\SensorStateInterface;
 
 class MonitoringManager
 {
@@ -30,7 +31,7 @@ class MonitoringManager
                 $attribute->run();
                 $wasSuccessful = $this->wasSuccessful($attribute);
                 $wasWarning = $this->wasWarning($attribute);
-                if (!$wasSuccessful && !$wasWarning) {
+                if (! $wasSuccessful && ! $wasWarning) {
                     $this->isSuccessful = false;
                 }
                 if ($wasWarning) {
@@ -106,15 +107,27 @@ class MonitoringManager
 
     private function wasSuccessful(AttributeInterface $attribute): bool
     {
-        return $attribute instanceof AbstractSensor
-            ? $attribute->getState() === SensorStateEnum::SUCCESSFUL
-            : $attribute->getState() === MetricStateEnum::OK;
+        if ($attribute instanceof SensorStateInterface) {
+            return $attribute->getState() === SensorStateEnum::SUCCESSFUL;
+        }
+
+        if ($attribute instanceof MetricStateInterface) {
+            return $attribute->getState() === MetricStateEnum::OK;
+        }
+
+        return false;
     }
 
-    private function wasWarning(AttributeInterface $abstract): bool
+    private function wasWarning(AttributeInterface $attribute): bool
     {
-        return $abstract instanceof AbstractSensor
-            ? $abstract->getState() === SensorStateEnum::WARNING
-            : $abstract->getState() === MetricStateEnum::WARNING;
+        if ($attribute instanceof SensorStateInterface) {
+            return $attribute->getState() === SensorStateEnum::WARNING;
+        }
+
+        if ($attribute instanceof MetricStateInterface) {
+            return $attribute->getState() === MetricStateEnum::WARNING;
+        }
+
+        return false;
     }
 }

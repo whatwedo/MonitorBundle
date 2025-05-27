@@ -37,10 +37,10 @@ class DoctrineDbal extends AbstractSensor implements ServiceSubscriberInterface
          * @var string $name
          * @var Connection $connection
          */
-        foreach ($this->container->get(ManagerRegistry::class)->getConnections() as $name => $connection) {
+        foreach ($this->container->get(ManagerRegistry::class)->getConnections() as $connection) {
             try {
                 $connection->executeQuery(
-                    $connection->getDriver()->getDatabasePlatform()->getDummySelectSQL()
+                    $connection->getDriver()->getDatabasePlatform($connection)->getDummySelectSQL()
                 );
             } catch (Exception $e) {
                 $this->details['exception'] = $e->getMessage();

@@ -31,11 +31,11 @@ namespace whatwedo\MonitorBundle\Tests\Monitoring\Sensor\Dummy;
 
 use whatwedo\MonitorBundle\Monitoring\Sensor\AbstractSensor;
 
-class RuntimeErrorDummySensor extends AbstractSensor
+class LogicErrorDummySensor extends AbstractSensor
 {
     public function getName(): string
     {
-        return 'Runtime Error Test';
+        return 'Logic Error Test';
     }
 
     public function isEnabled(): bool
