@@ -9,15 +9,11 @@ jobs:
         runs-on: ${{ matrix.operating-system }}
         name: PHP ${{ matrix.php }} and Symfony ${{ matrix.symfony }} on ${{ matrix.operating-system }}
         strategy:
+            fail-fast: false
             matrix:
                 operating-system: [ ubuntu-latest ]
-                php: [ '8.2', '8.3', '8.4' ]
-                symfony: [ '6.4.*', '7.0.*', '7.1.*', '7.2.*' ]
-                exclude:
-                  - php: '8.1'
-                    symfony: '7.0.*'
-                  - php: '8.1'
-                    symfony: '7.2.*'
+                php: [ '8.4', '8.5' ]
+                symfony: [ '7.4.*', '8.0.*', '8.1.*' ]
 
         steps:
             - uses: actions/checkout@master
@@ -26,6 +22,7 @@ jobs:
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
+                  coverage: xdebug
                   tools: flex
 
             - name: Download dependencies
@@ -34,15 +31,9 @@ jobs:
               uses: ramsey/composer-install@v1
 
             - name: Run test suite on PHP ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
-              uses: php-actions/phpunit@v3
               env:
-                XDEBUG_MODE: coverage
-                ACTION_PHPUNIT_PATH: ./vendor/bin/simple-phpunit
-              with:
-                configuration: phpunit.xml.dist
-                php_extensions: xdebug
-                args: tests --coverage-clover ./coverage.xml
-                version: 9
+                  XDEBUG_MODE: coverage
+              run: vendor/bin/simple-phpunit --configuration phpunit.xml.dist tests --coverage-clover ./coverage.xml
 
             - name: Upload to Codecov
               uses: codecov/codecov-action@v2
