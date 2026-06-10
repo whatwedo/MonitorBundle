@@ -13,8 +13,8 @@
     ],
     "require": {
         "php": ">=8.2",
-        "symfony/framework-bundle": "^6.4|^7.0",
-        "symfony/serializer": "^6.4|^7.0"
+        "symfony/framework-bundle": "^7.0|^8.0",
+        "symfony/serializer": "^7.0|^8.0"
     },
     "require-dev": {
         "nyholm/symfony-bundle-test": "^3.0",
@@ -22,15 +22,15 @@
         "whatwedo/php-coding-standard": "^1.0",
         "phpstan/phpstan": "^1.7",
         "phpunit/phpunit": "^9.5",
-        "symfony/browser-kit": "^6.4|^7.0",
-        "symfony/css-selector": "^6.4|^7.0",
-        "symfony/phpunit-bridge": "^6.4|^7.0",
-        "doctrine/doctrine-bundle": "^2.14",
+        "symfony/browser-kit": "^7.0|^8.0",
+        "symfony/css-selector": "^7.0|^8.0",
+        "symfony/phpunit-bridge": "^7.0|^8.0",
+        "doctrine/doctrine-bundle": "^2.14|^3.0",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^3.0.0",
-        "symfony/twig-bundle": "^6.4|^7.0",
-        "symfony/messenger": "^6.4|^7.0",
-        "symfony/mercure-bundle": "^0.3"
+        "symfony/twig-bundle": "^7.0|^8.0",
+        "symfony/messenger": "^7.0|^8.0",
+        "symfony/mercure-bundle": "^0.3|^0.4"
     },
     "autoload": {
         "psr-4": {
