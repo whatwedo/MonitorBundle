@@ -6,6 +6,7 @@ namespace whatwedo\MonitorBundle\Tests\Monitoring\Metric\Messenger;
 
 use Symfony\Component\DependencyInjection\ServiceLocator;
 use whatwedo\MonitorBundle\Enums\MetricStateEnum;
+use whatwedo\MonitorBundle\Monitoring\Metric\Messenger\QueuedMessages as QueuedMessagesMetric;
 use whatwedo\MonitorBundle\Tests\Monitoring\AbstractMonitoring;
 use whatwedo\MonitorBundle\Tests\Monitoring\Metric\Messenger\Transport\MockTransport;
 use whatwedo\MonitorBundle\Tests\UseTestKernelTrait;
@@ -45,7 +46,7 @@ class QueuedMessages extends AbstractMonitoring
         self::assertStringContainsString('Queued Messages', $this->createMockAttribute(0)->getName());
     }
 
-    protected function createMockAttribute(int $messageCount): self
+    protected function createMockAttribute(int $messageCount): QueuedMessagesMetric
     {
         $serviceLocator = $this->createMock(ServiceLocator::class);
         $serviceLocator->method('getProvidedServices')->willReturn([
@@ -53,7 +54,7 @@ class QueuedMessages extends AbstractMonitoring
         ]);
         $serviceLocator->method('get')->willReturn(new MockTransport($messageCount));
 
-        return new self(5, 10, $serviceLocator);
+        return new QueuedMessagesMetric(5, 10, $serviceLocator);
     }
 
     protected function getMonitoringClass(): string
