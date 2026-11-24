@@ -13,10 +13,10 @@ jobs:
             matrix:
                 operating-system: [ ubuntu-latest ]
                 php: [ '8.4', '8.5' ]
-                symfony: [ '7.4.*', '8.0.*', '8.1.*' ]
+                symfony: [ '7.4.*', '8.1.*', '8.2.*' ]
 
         steps:
-            - uses: actions/checkout@master
+            - uses: actions/checkout@v7
 
             - name: Setup PHP ${{ matrix.php }}
               uses: shivammathur/setup-php@v2
@@ -28,7 +28,7 @@ jobs:
             - name: Download dependencies
               env:
                   SYMFONY_REQUIRE: ${{ matrix.symfony }}
-              uses: ramsey/composer-install@v1
+              uses: ramsey/composer-install@v4
 
             - name: Run test suite on PHP ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
               env:
@@ -36,7 +36,7 @@ jobs:
               run: vendor/bin/phpunit --coverage-clover ./coverage.xml
 
             - name: Upload to Codecov
-              uses: codecov/codecov-action@v2
+              uses: codecov/codecov-action@v7
               with:
                 files: ./coverage.xml
                 verbose: true
@@ -45,17 +45,15 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - uses: actions/checkout@master
+            - uses: actions/checkout@v7
 
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: '8.4'
+                  php-version: '8.5'
 
             - name: Download dependencies
-              env:
-                  SYMFONY_REQUIRE: ${{ matrix.symfony }}
-              uses: ramsey/composer-install@v1
+              uses: ramsey/composer-install@v4
 
             - name: Check Code Styles
               run: vendor/bin/ecs
