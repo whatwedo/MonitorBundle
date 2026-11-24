@@ -9,7 +9,7 @@ use whatwedo\MonitorBundle\Monitoring\AttributeInterface;
 
 abstract class AbstractMetric implements AttributeInterface, MetricStateInterface
 {
-    public null|int|float $value = null;
+    public int|float|null $value = null;
 
     public ?MetricStateEnum $state = null;
 
@@ -22,7 +22,7 @@ abstract class AbstractMetric implements AttributeInterface, MetricStateInterfac
         return $this->state;
     }
 
-    public function getValue(): null|int|float
+    public function getValue(): int|float|null
     {
         return $this->value;
     }

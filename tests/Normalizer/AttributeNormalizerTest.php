@@ -99,7 +99,7 @@ final class AttributeNormalizerTest extends KernelTestCase
 
         self::assertSame(
             $expectedNormalizedBody,
-            $this->getContainer()->get(NormalizerInterface::class)->normalize($attribute)
+            $this->getContainer()->get(NormalizerInterface::class)->normalize($attribute),
         );
     }
 }

@@ -16,14 +16,14 @@ use whatwedo\MonitorBundle\Util\StatusCodeDecider;
 
 #[AsCommand(
     name: 'whatwedo:monitor:check',
-    description: 'Check the health of the application'
+    description: 'Check the health of the application',
 )]
 class CheckCommand extends Command
 {
     public function __construct(
         protected int $warningExitCode,
         protected int $criticalExitCode,
-        protected MonitoringManager $monitoringManager
+        protected MonitoringManager $monitoringManager,
     ) {
         parent::__construct();
     }

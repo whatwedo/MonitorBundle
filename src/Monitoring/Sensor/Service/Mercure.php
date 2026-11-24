@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /*
  * Copyright (c) 2021, whatwedo GmbH
  * All rights reserved
@@ -38,9 +39,8 @@ use whatwedo\MonitorBundle\Monitoring\Sensor\AbstractSensor;
 class Mercure extends AbstractSensor
 {
     public function __construct(
-        protected ?HubInterface $hub = null
-    ) {
-    }
+        protected ?HubInterface $hub = null,
+    ) {}
 
     public function getName(): string
     {

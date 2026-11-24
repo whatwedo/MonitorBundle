@@ -56,7 +56,7 @@ class MonitoringManager
 
             $groups = explode('\\', get_class($attribute));
             $groups = array_slice($groups, array_search('Monitoring', $groups, true) + 1 ?: 0, -1);
-            $groups = array_map(static fn ($e) => strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $e)), $groups);
+            $groups = array_map(static fn($e) => strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $e)), $groups);
             $attributeKey = array_pop($groups);
 
             $tmp = &$data;

@@ -12,9 +12,8 @@ use whatwedo\MonitorBundle\Monitoring\Sensor\AbstractSensor;
 class DoctrineMigrations extends AbstractSensor
 {
     public function __construct(
-        protected ?DependencyFactory $dependencyFactory = null
-    ) {
-    }
+        protected ?DependencyFactory $dependencyFactory = null,
+    ) {}
 
     public function getName(): string
     {

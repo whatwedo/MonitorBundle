@@ -17,9 +17,8 @@ class ApiController extends AbstractController
     public function __construct(
         protected int $warningExitCode,
         protected int $criticalExitCode,
-        protected ?string $authToken = null
-    ) {
-    }
+        protected ?string $authToken = null,
+    ) {}
 
     public function __invoke(Request $request, MonitoringManager $monitoringManager, SerializerInterface $serializer): Response
     {
@@ -39,7 +38,7 @@ class ApiController extends AbstractController
                     'json' => 'application/json',
                     'xml' => 'application/xml',
                 },
-            ]
+            ],
         );
     }
 }

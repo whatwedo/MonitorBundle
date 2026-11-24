@@ -17,8 +17,7 @@ class QueuedMessages extends AbstractMetric
         protected int $criticalThreshold,
         protected ?ServiceLocator $receiverLocator = null,
         protected ?TransportInterface $failureTransport = null,
-    ) {
-    }
+    ) {}
 
     public function getName(): string
     {

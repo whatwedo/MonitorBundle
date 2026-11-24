@@ -16,13 +16,9 @@ abstract class AbstractMonitoring extends KernelTestCase
 {
     use UseTestKernelTrait;
 
-    public static function configureSuccessfulKernel(TestKernel $kernel): void
-    {
-    }
+    public static function configureSuccessfulKernel(TestKernel $kernel): void {}
 
-    public static function configureFailureKernel(TestKernel $kernel): void
-    {
-    }
+    public static function configureFailureKernel(TestKernel $kernel): void {}
 
     public function testDisabled(): void
     {
