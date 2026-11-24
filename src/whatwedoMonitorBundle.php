@@ -113,7 +113,7 @@ class whatwedoMonitorBundle extends AbstractBundle
 
     public function loadExtension(array $config, ContainerConfigurator $configurator, ContainerBuilder $container): void
     {
-        $configurator->import('../config/services.yaml');
+        $configurator->import('../config/services.php');
 
         $container->registerForAutoconfiguration(AttributeInterface::class)
             ->addTag('whatwedo_monitor.attribute');
