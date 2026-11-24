@@ -1,7 +1,8 @@
 parameters:
     level: 1
     paths:
+        - config
         - src
         - tests
-    bootstrapFiles:
-        - vendor/bin/.phpunit/phpunit-9.6-0/vendor/autoload.php
+    excludePaths:
+        - config/reference.php (?)

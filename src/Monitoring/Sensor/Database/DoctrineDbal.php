@@ -15,9 +15,8 @@ use whatwedo\MonitorBundle\Monitoring\Sensor\AbstractSensor;
 class DoctrineDbal extends AbstractSensor implements ServiceSubscriberInterface
 {
     public function __construct(
-        protected ContainerInterface $container
-    ) {
-    }
+        protected ContainerInterface $container,
+    ) {}
 
     public function getName(): string
     {
@@ -40,7 +39,7 @@ class DoctrineDbal extends AbstractSensor implements ServiceSubscriberInterface
         foreach ($this->container->get(ManagerRegistry::class)->getConnections() as $connection) {
             try {
                 $connection->executeQuery(
-                    $connection->getDriver()->getDatabasePlatform($connection)->getDummySelectSQL()
+                    $connection->getDriver()->getDatabasePlatform($connection)->getDummySelectSQL(),
                 );
             } catch (Exception $e) {
                 $this->details['exception'] = $e->getMessage();

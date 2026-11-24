@@ -19,7 +19,7 @@ class BundleInitializationTest extends KernelTestCase
     {
         self::assertInstanceOf(
             MonitoringManager::class,
-            self::getContainer()->get(MonitoringManager::class)
+            self::getContainer()->get(MonitoringManager::class),
         );
     }
 

@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /*
  * Copyright (c) 2023, whatwedo GmbH
  * All rights reserved
@@ -37,15 +38,15 @@ class StatusCodeDecider
         protected MonitoringManager $monitoringManager,
         protected int $successStatusCode,
         protected int $warningStatusCode,
-        protected int $criticalStatusCode
-    ) {
-    }
+        protected int $criticalStatusCode,
+    ) {}
 
     public function decide(): int
     {
         if ($this->monitoringManager->isSuccessful() && $this->monitoringManager->isWarning()) {
             return $this->warningStatusCode;
-        } elseif ($this->monitoringManager->isSuccessful()) {
+        }
+        if ($this->monitoringManager->isSuccessful()) {
             return $this->successStatusCode;
         }
 

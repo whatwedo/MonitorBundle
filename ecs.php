@@ -7,33 +7,34 @@ use PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting\ClassCommentSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting\FileCommentSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting\FunctionCommentThrowTagSniff;
 use PhpCsFixer\Fixer\Phpdoc\NoSuperfluousPhpdocTagsFixer;
+use PhpCsFixer\Fixer\Whitespace\MethodChainingIndentationFixer;
+use PhpCsFixerCustomFixers\Fixer\NoNullableBooleanTypeFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
+use whatwedo\PhpCodingStandard\Set\WhatwedoSets;
 
-return static function (ECSConfig $containerConfigurator): void {
-    $containerConfigurator->paths([
+return ECSConfig::configure()
+    ->withPaths([
+        __DIR__ . '/config',
         __DIR__ . '/src',
         __DIR__ . '/tests',
-    ]);
-
-    // run and fix, one by one
-    $containerConfigurator->import('vendor/whatwedo/php-coding-standard/config/whatwedo-symfony.php');
-
-    $containerConfigurator->skip([
+    ])
+    ->withSkip([__DIR__ . '/config/reference.php'])
+    ->withSets([
+        WhatwedoSets::SYMFONY,
+    ])
+    ->withSkip([
         NoSuperfluousPhpdocTagsFixer::class,
         FileCommentSniff::class,
         ClassCommentSniff::class,
         FunctionCommentThrowTagSniff::class,
         ValidClassNameSniff::class => [
             __DIR__ . '/src/whatwedoMonitorBundle.php',
-            __DIR__ . '/src/DependencyInjection/whatwedoMonitorExtension.php',
         ],
-        PhpCsFixer\Fixer\Whitespace\MethodChainingIndentationFixer::class => [
-            __DIR__ . '/src/DependencyInjection/Configuration.php',
+        MethodChainingIndentationFixer::class => [
+            __DIR__ . '/src/whatwedoMonitorBundle.php',
         ],
-        PhpCsFixerCustomFixers\Fixer\NoNullableBooleanTypeFixer::class => [
+        NoNullableBooleanTypeFixer::class => [
             __DIR__ . '/src/Manager/MonitoringManager.php',
         ],
-    ]);
-
-    $containerConfigurator->parallel();
-};
+    ])
+    ->withParallel();

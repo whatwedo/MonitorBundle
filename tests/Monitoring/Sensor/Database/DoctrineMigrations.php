@@ -22,7 +22,7 @@ class DoctrineMigrations extends AbstractMonitoring
     public function testSuccessful(): void
     {
         $kernel = self::bootKernel([
-            'config' => [$this, 'configureSuccessfulKernel'],
+            'config' => $this->configureSuccessfulKernel(...),
         ]);
         $application = new Application($kernel);
         $monitoringManager = $kernel->getContainer()->get(MonitoringManager::class);

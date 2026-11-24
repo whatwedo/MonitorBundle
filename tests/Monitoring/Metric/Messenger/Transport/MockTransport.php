@@ -11,9 +11,8 @@ use Symfony\Component\Messenger\Transport\TransportInterface;
 class MockTransport implements TransportInterface, MessageCountAwareInterface
 {
     public function __construct(
-        protected int $messageCount
-    ) {
-    }
+        protected int $messageCount,
+    ) {}
 
     public function getMessageCount(): int
     {
@@ -25,13 +24,9 @@ class MockTransport implements TransportInterface, MessageCountAwareInterface
         return [];
     }
 
-    public function ack(Envelope $envelope): void
-    {
-    }
+    public function ack(Envelope $envelope): void {}
 
-    public function reject(Envelope $envelope): void
-    {
-    }
+    public function reject(Envelope $envelope): void {}
 
     public function send(Envelope $envelope): Envelope
     {

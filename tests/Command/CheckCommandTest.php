@@ -106,7 +106,7 @@ class CheckCommandTest extends KernelTestCase
         $logicException = false;
         try {
             $commandTester->execute([]);
-        } catch (\LogicException $e) {
+        } catch (\LogicException) {
             $logicException = true;
         } finally {
             self::assertTrue($logicException);

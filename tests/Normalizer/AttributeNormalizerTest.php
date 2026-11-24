@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace whatwedo\MonitorBundle\Tests\Normalizer;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use whatwedo\MonitorBundle\Monitoring\AttributeInterface;
@@ -91,16 +92,14 @@ final class AttributeNormalizerTest extends KernelTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideDummyMetricsAndSensors
-     */
+    #[DataProvider('provideDummyMetricsAndSensors')]
     public function testNormalizeWorksAsExpected(AttributeInterface $attribute, array $expectedNormalizedBody): void
     {
         $attribute->run();
 
         self::assertSame(
             $expectedNormalizedBody,
-            $this->getContainer()->get(NormalizerInterface::class)->normalize($attribute)
+            $this->getContainer()->get(NormalizerInterface::class)->normalize($attribute),
         );
     }
 }

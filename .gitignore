@@ -2,4 +2,5 @@
 /var/
 composer.lock
 .editorconfig
-.phpunit.result.cache
+.phpunit.cache/
+/config/reference.php
