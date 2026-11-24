@@ -3,3 +3,4 @@
 composer.lock
 .editorconfig
 .phpunit.cache/
+/config/reference.php

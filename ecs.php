@@ -27,10 +27,9 @@ return ECSConfig::configure()
         FunctionCommentThrowTagSniff::class,
         ValidClassNameSniff::class => [
             __DIR__ . '/src/whatwedoMonitorBundle.php',
-            __DIR__ . '/src/DependencyInjection/whatwedoMonitorExtension.php',
         ],
         MethodChainingIndentationFixer::class => [
-            __DIR__ . '/src/DependencyInjection/Configuration.php',
+            __DIR__ . '/src/whatwedoMonitorBundle.php',
         ],
         NoNullableBooleanTypeFixer::class => [
             __DIR__ . '/src/Manager/MonitoringManager.php',

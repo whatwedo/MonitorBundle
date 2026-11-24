@@ -5,17 +5,17 @@ services:
         public: false
 
     whatwedo\MonitorBundle\:
-        resource: '../../*'
+        resource: '../src/*'
         exclude:
-            - '../../DependencyInjection/'
-            - '../../Enum/'
+            - '../src/DependencyInjection/'
+            - '../src/Enum/'
 
     whatwedo\MonitorBundle\Controller\:
-        resource: '../../Controller/'
+        resource: '../src/Controller/'
         tags: ['controller.service_arguments']
 
     whatwedo\MonitorBundle\Normalizer\:
-        resource: '../../Normalizer/'
+        resource: '../src/Normalizer/'
         tags: ['serializer.normalizer']
 
     whatwedo\MonitorBundle\Monitoring\Metric\Messenger\QueuedMessages:
