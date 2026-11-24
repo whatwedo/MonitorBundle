@@ -29,7 +29,8 @@
         "doctrine/orm": "^3.0.0",
         "symfony/twig-bundle": "^7.4|^8.0",
         "symfony/messenger": "^7.4|^8.0",
-        "symfony/mercure-bundle": "^0.7"
+        "symfony/mercure-bundle": "^0.7",
+        "rector/rector": "^2.8"
     },
     "autoload": {
         "psr-4": {

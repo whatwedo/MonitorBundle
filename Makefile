@@ -29,6 +29,14 @@ install:
 ecs:
 	vendor/bin/ecs --fix
 
+## check code with rector (against lowest dependencies)
+rector:
+	vendor/bin/rector process --dry-run
+
+## apply rector changes (against lowest dependencies)
+rector-fix:
+	vendor/bin/rector process
+
 ## check code with phpstan
 phpstan:
 	vendor/bin/phpstan --memory-limit=2G
