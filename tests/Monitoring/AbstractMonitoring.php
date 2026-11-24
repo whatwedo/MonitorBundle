@@ -28,14 +28,14 @@ abstract class AbstractMonitoring extends KernelTestCase
     public function testEnabled(): void
     {
         self::assertTrue($this->getAttribute(self::bootKernel([
-            'config' => [$this, 'configureSuccessfulKernel'],
+            'config' => $this->configureSuccessfulKernel(...),
         ]))->isEnabled());
     }
 
     public function testSuccessful(): void
     {
         $kernel = self::bootKernel([
-            'config' => [$this, 'configureSuccessfulKernel'],
+            'config' => $this->configureSuccessfulKernel(...),
         ]);
         self::assertTrue($kernel->getContainer()->get(MonitoringManager::class)->isSuccessful());
     }
@@ -43,7 +43,7 @@ abstract class AbstractMonitoring extends KernelTestCase
     public function testName(): void
     {
         $kernel = self::bootKernel([
-            'config' => [$this, 'configureSuccessfulKernel'],
+            'config' => $this->configureSuccessfulKernel(...),
         ]);
 
         $application = new Application($kernel);
@@ -58,7 +58,7 @@ abstract class AbstractMonitoring extends KernelTestCase
     public function testFailure(): void
     {
         self::assertFalse(self::bootKernel([
-            'config' => [$this, 'configureFailureKernel'],
+            'config' => $this->configureFailureKernel(...),
         ])->getContainer()->get(MonitoringManager::class)->isSuccessful());
     }
 
